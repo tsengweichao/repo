@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_info_demo/app/tools/tools.dart';
+import 'package:weather_info_demo/app/weather_api/query_weather_data.dart';
 
 final countProvider = StateProvider<int>((ref) {
   return 0;
@@ -28,8 +30,10 @@ class MyApp extends ConsumerWidget {
           children: [
             Text('$count'),
             ElevatedButton(
-              onPressed: () {
-                ref.read(countProvider.notifier).state++;
+              onPressed: () async {
+                // ref.read(countProvider.notifier).state++;
+                var res = await QueryWeatherData().getWeather();
+                printLog(res.toJson());
               },
               child: const Text('add 1'),
             ),
